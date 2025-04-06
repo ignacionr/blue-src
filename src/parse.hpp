@@ -4,14 +4,14 @@
 #include <ranges>
 #include <algorithm>
 
-void parse(const std::string &html_contents, auto && callback)
+void parse(std::string_view html_contents, auto && callback)
 {
     static const std::regex block_regex{R"(<a class="title"[^>]*>([^<]+)<\/a>\s*<div class="values">([\s\S]*?)(?:<a class="title"|<div class="tile update">|<\/div>\s*<\/div>\s*<div class="tile is-child">))"};
     static const std::regex value_regex{R"(<div class="label">([^<]+)<\/div>\s*<div class="val">([^<]+)<\/div>)"};
     
     auto blocks = std::ranges::subrange(
-        std::sregex_iterator(html_contents.begin(), html_contents.end(), block_regex),
-        std::sregex_iterator()
+        std::cregex_iterator(html_contents.data(), html_contents.data() + html_contents.length(), block_regex),
+        std::cregex_iterator()
     );
 
     for (const auto& block_match : blocks) {
@@ -26,8 +26,9 @@ void parse(const std::string &html_contents, auto && callback)
 
         // Convertido a pares, y filtrados los vacíos
         auto processed_values = values 
-            | std::views::transform([](const auto& match) -> std::pair<std::string, std::string> {
-                return {match[1].str(), match[2].str()};
+            | std::views::transform([](const auto& match) -> std::pair<std::string_view, std::string_view> {
+                return {std::string_view{&(*match[1].first), static_cast<size_t>(match[1].length())}, 
+                        std::string_view{&(*match[2].first), static_cast<size_t>(match[2].length())}};
             })
             | std::views::filter([](const auto& pair) { return !pair.first.empty(); });
 
