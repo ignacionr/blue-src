@@ -1,0 +1,18 @@
+{
+    "version": 2,
+  
+    "configurePresets": [
+      {
+        "name": "debug",
+        "cacheVariables": {
+          "CMAKE_TOOLCHAIN_FILE": "/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        }
+      },
+      {
+        "name": "release",
+        "cacheVariables": {
+          "CMAKE_TOOLCHAIN_FILE": "/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        }
+      }
+    ]
+  }
