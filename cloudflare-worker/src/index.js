@@ -16,6 +16,7 @@ export default {
       // Clone and modify headers
       const newHeaders = new Headers(response.headers);
       newHeaders.set("Content-Type", "application/json");
+      newHeaders.set("cache-control", "no-store");
       newHeaders.delete("Content-Disposition");
   
       return new Response(response.body, {
