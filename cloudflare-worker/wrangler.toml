@@ -1,0 +1,6 @@
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2024-04-11"
+
+# Optional: add this if you use modules syntax (import/export)
+# type = "module"
