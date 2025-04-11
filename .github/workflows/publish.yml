@@ -5,6 +5,10 @@ on:
   release:
     types: [published]  # Run when a new release is published
 
+permissions:
+  contents: write  # Allow writing to the repository contents
+  pages: write  # Allow writing to GitHub Pages
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
