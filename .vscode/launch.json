@@ -9,9 +9,11 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Debug/blue-src.exe",
-            "args": [],
+            "args": [
+                "-s"
+            ],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
             "console": "externalTerminal",
             "preLaunchTask": "CMake: build"
