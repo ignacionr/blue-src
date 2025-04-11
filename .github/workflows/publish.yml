@@ -1,0 +1,54 @@
+name: Build and Publish to GitHub Pages
+
+on:
+  workflow_dispatch:  # Allow manual triggering
+  release:
+    types: [published]  # Run when a new release is published
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Download latest release asset
+        run: |
+          # Get the latest release info
+          LATEST_RELEASE_URL=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.assets[] | select(.name == "blue-src-linux-amd64") | .browser_download_url')
+          
+          # Download the asset
+          wget -q "$LATEST_RELEASE_URL" -O blue-src-linux-amd64
+          chmod +x blue-src-linux-amd64
+      
+      - name: Create build directory
+        run: mkdir -p build_dir
+      
+      - name: Run executable and generate files
+        run: |
+          # Move executable to build directory
+          mv blue-src-linux-amd64 build_dir/
+          cd build_dir
+          
+          # Run the executable to generate files
+          ./blue-src-linux-amd64 -s
+          
+          # Remove the executable
+          rm blue-src-linux-amd64
+          
+          # List generated files
+          echo "Files generated:"
+          find . -type f -not -name "*.*" | sort
+      
+      - name: Setup GitHub Pages
+        run: |
+          # Create .nojekyll file to prevent Jekyll processing
+          touch build_dir/.nojekyll
+      
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build_dir
+          branch: gh-pages
+          clean: true
