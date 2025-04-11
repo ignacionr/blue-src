@@ -1,4 +1,4 @@
-name = "my-worker"
+name = "blue-src"
 main = "src/index.js"
 compatibility_date = "2024-04-11"
 
