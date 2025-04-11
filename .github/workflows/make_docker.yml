@@ -1,0 +1,75 @@
+name: Build Docker Image and Release Binary
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Determine version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION=$(date +'%Y%m%d')-$(git rev-parse --short HEAD)
+          fi
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          load: true
+          tags: blue-src:latest
+      
+      - name: Extract binary from Docker image
+        run: |
+          # Create a temporary container from the image
+          CONTAINER_ID=$(docker create blue-src:latest)
+          
+          # Create artifacts directory
+          mkdir -p ./artifacts
+          
+          # Extract the binary file
+          docker cp $CONTAINER_ID:/src/build/blue-src ./artifacts/blue-src
+          
+          # Clean up the container
+          docker rm $CONTAINER_ID
+          
+          # Make the binary executable
+          chmod +x ./artifacts/blue-src
+          
+          # Add platform info to filename
+          mv ./artifacts/blue-src ./artifacts/blue-src-linux-amd64
+          
+          # Create checksum
+          cd ./artifacts
+          sha256sum blue-src-linux-amd64 > blue-src-linux-amd64.sha256
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: Release v${{ env.VERSION }}
+          files: |
+            ./artifacts/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
