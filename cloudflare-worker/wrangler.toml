@@ -1,6 +1,13 @@
 name = "blue-src"
 main = "src/index.js"
-compatibility_date = "2024-04-11"
+compatibility_date = "2025-04-11"
 
-# Optional: add this if you use modules syntax (import/export)
-# type = "module"
+# Optional, but good practice
+workers_dev = false
+
+routes = [
+  { pattern = "blue.inz.com.ar/*", zone_id = "60b6e1db95acb7603e6fb6dd8b2648e3" }
+]
+
+# You can find your zone_id and account_id in the Cloudflare dashboard
+account_id = "c20d3bd18424c5b076930cb7fd0a9d57"
