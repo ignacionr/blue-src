@@ -34,6 +34,9 @@ jobs:
           # Move executable to build directory
           mv blue-src-linux-amd64 build_dir/
           cd build_dir
+
+          # Copy all files from the source ./static directory to the build directory
+          cp -r ../static/* .
           
           # Run the executable to generate files
           ./blue-src-linux-amd64 -s
