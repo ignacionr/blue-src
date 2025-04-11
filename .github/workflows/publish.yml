@@ -4,6 +4,8 @@ on:
   workflow_dispatch:  # Allow manual triggering
   release:
     types: [published]  # Run when a new release is published
+  schedule:
+    - cron: '0 * * * *'  # Run every hour
 
 permissions:
   contents: write  # Allow writing to the repository contents
