@@ -1,0 +1,286 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Blue Dollar Exchange Rate API",
+        "description": "API for obtaining blue dollar exchange rates in Argentina",
+        "version": "1.0.0",
+        "contact": {
+            "name": "API Support",
+            "url": "https://blue.inz.com.ar/support",
+            "email": "support@inz.com.ar"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://blue.inz.com.ar",
+            "description": "Production server"
+        }
+    ],
+    "paths": {
+        "/blue": {
+            "get": {
+                "summary": "Get blue dollar exchange rate",
+                "description": "Returns the current buy and sell rates for the blue dollar",
+                "operationId": "getBlueRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "blue"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["compra", "venta"],
+                                            "properties": {
+                                                "compra": {
+                                                    "type": "number",
+                                                    "description": "Buy rate in ARS",
+                                                    "example": 1355
+                                                },
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1375
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/cripto": {
+            "get": {
+                "summary": "Get cryptocurrency dollar exchange rate",
+                "description": "Returns the current buy and sell rates for the cryptocurrency dollar",
+                "operationId": "getCriptoRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "cripto"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["compra", "venta"],
+                                            "properties": {
+                                                "compra": {
+                                                    "type": "number",
+                                                    "description": "Buy rate in ARS",
+                                                    "example": 1360
+                                                },
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1361.5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/contado_con_liqui": {
+            "get": {
+                "summary": "Get 'contado con liquidación' dollar exchange rate",
+                "description": "Returns the current buy and sell rates for the 'contado con liquidación' dollar",
+                "operationId": "getContadoConLiquiRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "contado_con_liqui"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["compra", "venta"],
+                                            "properties": {
+                                                "compra": {
+                                                    "type": "number",
+                                                    "description": "Buy rate in ARS",
+                                                    "example": 1348.4
+                                                },
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1350.4
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/mep_bolsa": {
+            "get": {
+                "summary": "Get MEP (Mercado Electrónico de Pagos) dollar exchange rate",
+                "description": "Returns the current buy and sell rates for the MEP dollar",
+                "operationId": "getMepBolsaRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "mep_bolsa"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["compra", "venta"],
+                                            "properties": {
+                                                "compra": {
+                                                    "type": "number",
+                                                    "description": "Buy rate in ARS",
+                                                    "example": 1348.8
+                                                },
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1350.5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/tarjeta": {
+            "get": {
+                "summary": "Get credit card dollar exchange rate",
+                "description": "Returns the current sell rate for the credit card dollar",
+                "operationId": "getTarjetaRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rate",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "tarjeta"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["venta"],
+                                            "properties": {
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1426.75
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/oficial": {
+            "get": {
+                "summary": "Get official dollar exchange rate",
+                "description": "Returns the current buy and sell rates for the official dollar",
+                "operationId": "getOficialRate",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with exchange rates",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["title", "values"],
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "oficial"
+                                        },
+                                        "values": {
+                                            "type": "object",
+                                            "required": ["compra", "venta"],
+                                            "properties": {
+                                                "compra": {
+                                                    "type": "number",
+                                                    "description": "Buy rate in ARS",
+                                                    "example": 1037.5
+                                                },
+                                                "venta": {
+                                                    "type": "number",
+                                                    "description": "Sell rate in ARS",
+                                                    "example": 1097.5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    }
+}
